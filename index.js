@@ -67,4 +67,4 @@ router.post('/upload', body(), function * (next) {
 
 app.use(router.routes())
 app.listen(3002);
-console.log('listening on port 3001');
+console.log('listening on port 3002');
