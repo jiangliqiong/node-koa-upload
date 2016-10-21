@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Upload</title>
+  <style>
+    body {
+      padding: 50px;
+      font: 14px Helvetica, Arial;
+    }
+  </style>
+  <script type="text/javascript">
+    window.domain = "localhost";
+  </script>
+<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="js/jquery.form.js"></script>
+</head>
+<body>
+<!--   <form method="POST" action="http://localhost:3001/upload" id="form" enctype="multipart/form-data" target="iframe">
+    <input type="file" name="filename" id="fileselect1">
+    <input type="submit" value="Upload" id="submits">
+  </form> -->
+
+<form method="POST" action="http://localhost:3002/upload" id="fileform1" enctype="multipart/form-data" target="fileform1" class="filespan">
+    <input type="file" name="filename" id="file_upload1" class="file_upload"/>
+    <input type="submit" value="Upload" id="submits">
+</form>
+
+  <div id="view"></div>
+  <iframe name="fileform1" id="fileiframe1"></iframe>
+  <script type="text/javascript">
+         document.querySelector("#file_upload1").onchange=function(){
+            document.querySelector("#submits").click();
+            document.querySelector("#fileiframe1").onload=function(){
+              var json = $('#fileiframe1').contents().find("body").html();
+              if(JSON.parse(json).url){
+                var Image = $('<img src="'+JSON.parse(json).url+'" alt="" />');
+                $("#view").html(Image);
+              }
+            }
+         }
+  </script>
+</body>
+</html>
