@@ -15,29 +15,36 @@
 <script type="text/javascript" src="js/jquery.form.js"></script>
 </head>
 <body>
-<!--   <form method="POST" action="http://localhost:3001/upload" id="form" enctype="multipart/form-data" target="iframe">
-    <input type="file" name="filename" id="fileselect1">
-    <input type="submit" value="Upload" id="submits">
-  </form> -->
+
 
 <form method="POST" action="http://localhost:3002/upload" id="fileform1" enctype="multipart/form-data" target="fileform1" class="filespan">
-    <input type="file" name="filename" id="file_upload1" class="file_upload"/>
+    <span id="test"><input type="file" name="filename" id="file_upload1" class="file_upload"/></span>
     <input type="submit" value="Upload" id="submits">
 </form>
 
-  <div id="view"></div>
-  <iframe name="fileform1" id="fileiframe1"></iframe>
-  <script type="text/javascript">
-         document.querySelector("#file_upload1").onchange=function(){
+<div id="view"></div>
+<iframe name="fileform1" id="fileiframe1"></iframe>
+<script type="text/javascript">
+    $("#test").on("change",'#file_upload1',function(){
+        var extStart = $("#file_upload1").val().lastIndexOf(".");
+        var len = $("#file_upload1").val().length;
+        var ext = $("#file_upload1").val().substring(extStart,len);
+        var extarr = [".jpg",".png",".gif",".jpeg"]
+        if(!(extarr.indexOf(ext)>-1)){
+            alert("不是图片");
+            $("#test").html('<input type="file" name="filename" id="file_upload1" class="file_upload"/>');
+            $("#view").html("");
+        }else{
             document.querySelector("#submits").click();
             document.querySelector("#fileiframe1").onload=function(){
-              var json = $('#fileiframe1').contents().find("body").html();
-              if(JSON.parse(json).url){
-                var Image = $('<img src="'+JSON.parse(json).url+'" alt="" />');
-                $("#view").html(Image);
-              }
+                var json = $('#fileiframe1').contents().find("body").html();
+                if(JSON.parse(json).url){
+                    var Image = $('<img src="'+JSON.parse(json).url+'" alt="" />');
+                    $("#view").html(Image);
+                }
             }
-         }
-  </script>
+        } 
+    })      
+</script>
 </body>
 </html>
